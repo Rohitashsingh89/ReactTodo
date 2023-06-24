@@ -37,13 +37,17 @@
     padding: 5px 10px;
     border-radius: 4px;
     box-shadow: 0 6px 12px rgba(113,63,255,.25);
-}
+} 
 .card {
     background: #fff;
     border-radius: 24px;
     box-shadow: 0 6px 58px rgba(196,203,214,.104);
     margin-top: 15px;
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .2);
+}
+.task h5 {
+    font-weight: 300px;
+    font-size: 15px;
 }
 .card-body {
     display: flex;
@@ -52,6 +56,17 @@
     align-items: center;
     padding: 9px;
     gap: 10px;
+    margin: 0;
+}
+.card-title p{
+    padding-bottom: 1px;
+    padding: 0;
+}
+.card-title.text-secondary.task.pt-2.pb-0 {
+    margin: 0px;
+}
+.card-title.text-secondary {
+    margin: 0px;
 }
 .centered-modal {
     display: flex;
@@ -72,28 +87,27 @@
 }
 
 .circle {
-    width: 10px;
-    height: 30px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     border: 2px solid gray;
-}
+  }
+  
   
   .incomplete {
     border: 2px solid gray;
 
   }
-  
+
   .inprogress {
-    /* background-color: #6495ed; */
     border: 40x solid #6495ed;
     background-image: linear-gradient(90deg, #6495ed 50%, transparent 50%);
     background-size: 100% 200%;
   }
   
-  .complete {
-    background-color: white;
-    border: 2px solid #6495ed;
-    transition: all 0.1s .3s;
+  .Done {
+    background-color: #6495ed;
+    border: 2px solid gray;
   }
   
     
@@ -101,7 +115,11 @@
     .card-body {
         display: block;  
         text-align: start; 
-        padding-left: 15px;
+        padding-left: 10px;
+        gap: 20px;
+    }
+    .status-button, .icons {
+        padding: 10px 0;
     }
 }
 @media screen and (max-width: 400px) {

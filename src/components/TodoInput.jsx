@@ -2,13 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import TodoList from './TodoList';
 
+const getlocalstoragetodos = () => {
+  let todos = localStorage.getItem('todos');
+  console.log(todos)
+
+  if(todos) {
+    return JSON.parse(localStorage.getItem('todos'));
+  } else {
+    return [];
+  }
+}
 
 function TodoInput() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [inputText, setInputText] = useState('');
   const [priority, setPriority] = useState('');
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(getlocalstoragetodos());
   const [selectedTodoIndex, setSelectedTodoIndex] = useState(null);
 
 
@@ -58,25 +68,43 @@ function TodoInput() {
     setTodos(updatedTodos);
   };    
 
+  // useEffect(() => {
+  //   // Retrieve the stored data from localStorage
+  //   const storedPriority = localStorage.getItem('priority');
+  //   const storedTaskName = localStorage.getItem('taskName');
+
+  //   if (storedPriority && storedTaskName) {
+  //     // Set the stored values to the state variables
+  //     setPriority(storedPriority);
+  //     setInputText(storedTaskName);
+  //   }
+  // }, []); // Empty dependency array to run the effect only once when the component mounts
+
+  // useEffect(() => {
+  //   const storedTodos = JSON.parse(localStorage.getItem('todos'));
+
+  //   if (storedTodos) {
+  //     setTodos(storedTodos);
+  //   }
+  // }, []);
+
+
+  // useEffect(() => {
+  //   // Store the form data in local storage whenever priority or inputText changes
+  //   localStorage.setItem('priority', priority);
+  //   localStorage.setItem('taskName', inputText);
+  // }, [priority, inputText]);
+
   useEffect(() => {
-    // Retrieve the stored data from localStorage
-    const storedPriority = localStorage.getItem('priority');
-    const storedTaskName = localStorage.getItem('taskName');
-
-    if (storedPriority && storedTaskName) {
-      // Set the stored values to the state variables
-      setPriority(storedPriority);
-      setInputText(storedTaskName);
-    }
-  }, []); // Empty dependency array to run the effect only once when the component mounts
-
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Store the form data in local storage
-    localStorage.setItem('priority', priority);
-    localStorage.setItem('taskName', inputText);
+    // localStorage.setItem('priority', priority);
+    // localStorage.setItem('taskName', inputText);
 
     if (selectedTodoIndex !== null) {
       // Update the selected todo
@@ -84,7 +112,7 @@ function TodoInput() {
       const selectedTodo = updatedTodos[selectedTodoIndex];
       selectedTodo.priority = priority;
       selectedTodo.inputText = inputText;
-      selectedTodo.status = 'Completed';
+      selectedTodo.status = 'Done';
       setTodos(updatedTodos);
   
       // Clear the selected todo index
@@ -94,7 +122,7 @@ function TodoInput() {
       const newTodo = {
         priority,
         inputText,
-        status: 'Incompleted'
+        status: 'Incomplete'
       };
       setTodos([...todos, newTodo]);
     }
@@ -113,7 +141,7 @@ function TodoInput() {
     <>
     <div className="wrapper">
       <div className="headercontainer">
-          <h1 >To Do List</h1>
+          <h1 >THINGS TO DO</h1>
           <button className='button' color="primary" onClick={toggleModal} style={{ border: 'none', outline: "none" }}>+ Add Task</button>
       </div>
 
@@ -138,7 +166,7 @@ function TodoInput() {
                 <div>
                   <Button
                     type="button"
-                    outline color="danger"
+                    color={priority === 'high' ? 'danger' : 'outline-danger'}
                     className={`m-2  ${priority === 'high' ? 'active' : ''}`}
                     onClick={() => handlePriorityChange('high')}
                   >
@@ -146,7 +174,7 @@ function TodoInput() {
                   </Button>
                   <Button
                     type="button"
-                    outline color='warning'
+                    color={priority === 'medium' ? 'warning' : 'outline-warning'}
                     className={`m-2 ${priority === 'medium' ? 'active' : ''}`}
                     onClick={() => handlePriorityChange('medium')}
                   >
@@ -154,7 +182,7 @@ function TodoInput() {
                   </Button>
                   <Button
                     type="button"
-                    outline color='success'
+                    color={priority === 'high' ? 'success' : 'outline-success'}
                     className={`m-2 ${priority === 'low' ? 'active' : ''}`}
                     onClick={() => handlePriorityChange('low')}
                   >
