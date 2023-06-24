@@ -1,38 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.wrapper {
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 0 15px;
+    width: 720px;
+}
 .App {
-  text-align: center;
+    margin: 50px 0;
+}
+.headercontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn:focus {
+    outline: none;
+}
+.button {
+  background: #713fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 12px rgba(113,63,255,.25);
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 13px 30px;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+}
+.btn2 {
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(113,63,255,.25);
+}
+.card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 6px 58px rgba(196,203,214,.104);
+    margin-top: 15px;
+    box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .2);
+}
+.card-body {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    padding: 9px;
+    gap: 10px;
+}
+.centered-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    border-radius: 20px;
+}
+.close-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1.5rem;
+}
+.modal-content {
+    border-radius: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.circle {
+    width: 10px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid gray;
 }
+  
+  .incomplete {
+    border: 2px solid gray;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  .inprogress {
+    /* background-color: #6495ed; */
+    border: 40x solid #6495ed;
+    background-image: linear-gradient(90deg, #6495ed 50%, transparent 50%);
+    background-size: 100% 200%;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .complete {
+    background-color: white;
+    border: 2px solid #6495ed;
+    transition: all 0.1s .3s;
   }
+  
+    
+@media screen and (max-width: 550px) {
+    .card-body {
+        display: block;  
+        text-align: start; 
+        padding-left: 15px;
+    }
+}
+@media screen and (max-width: 400px) {
+    .headercontainer {
+        display: block;  
+        text-align: start; 
+        padding-left: 15px;
+    }
 }
