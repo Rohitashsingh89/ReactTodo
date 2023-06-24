@@ -4,7 +4,7 @@ import TodoList from './TodoList';
 
 const getlocalstoragetodos = () => {
   let todos = localStorage.getItem('todos');
-  console.log(todos)
+  // console.log(todos)
 
   if(todos) {
     return JSON.parse(localStorage.getItem('todos'));
@@ -130,8 +130,8 @@ function TodoInput() {
     // Process the form submission here
     setPriority('');
     setInputText('');
-    console.log('Selected priority:', priority);
-    console.log('Task Name:', inputText);
+    // console.log('Selected priority:', priority);
+    // console.log('Task Name:', inputText);
     
     // console.log(inputText)
   }
