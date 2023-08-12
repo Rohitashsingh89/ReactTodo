@@ -3,70 +3,97 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .wrapper {
+    margin-bottom: 20vh;
     padding: 0 15px;
 }
+header {
+    background-color: #007bff;
+    color: white;
+    height: 80px;
+    position: sticky;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    margin-bottom: 10vh;
+}
+
 .box {
     display: flex;
     justify-content: center;
     align-items: start;
 }
+
 .todocontainer {
     display: inline-block;
     justify-content: space-between;
     align-items: center;
 }
+
 .btn:focus {
     outline: none;
 }
+
 .button {
-  background: #713fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 12px rgba(113,63,255,.25);
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 13px 30px;
-  margin-bottom: 10px;
-  border: none;
-  outline: none;
+    background: #713fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 12px rgba(113, 63, 255, .25);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 13px 30px;
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
 }
+
 .btn2 {
     padding: 5px 10px;
     border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(113,63,255,.25);
-} 
-img  {
+    box-shadow: 0 6px 12px rgba(113, 63, 255, .25);
+}
+
+img {
     filter: invert(black);
     /* filter: invert(white); */
     filter: invert(100%) brightness(200%);
 }
+
 .card {
     background: #fff;
     border-radius: 24px;
     margin-top: 15px;
     box-shadow: 3px 3px 2px 1px rgba(0, 0, 255, .2);
 }
+
 .content {
     height: 100px;
-    overflow-y: scroll; 
-    scrollbar-width: none; 
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
+
 .content::-webkit-scrollbar {
-    width: 0.5rem; 
-    background-color: transparent; 
+    width: 0.5rem;
+    background-color: transparent;
 }
+
 .content::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
+
 .shadow {
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 255, .2);
 }
+
 .task h5 {
     font-weight: 300px;
     font-size: 15px;
 }
+
 .card-body {
     display: flex;
     justify-content: space-around;
@@ -76,16 +103,20 @@ img  {
     gap: 10px;
     margin: 0;
 }
-.card-title p{
+
+.card-title p {
     padding-bottom: 1px;
     padding: 0;
 }
+
 .card-title.text-secondary.task.pt-2.pb-0 {
     margin: 0px;
 }
+
 .card-title.text-secondary {
     margin: 0px;
 }
+
 .centered-modal {
     display: flex;
     align-items: center;
@@ -93,6 +124,7 @@ img  {
     min-height: 100vh;
     border-radius: 20px;
 }
+
 .close-icon {
     cursor: pointer;
     position: absolute;
@@ -100,53 +132,73 @@ img  {
     right: 1rem;
     font-size: 1.5rem;
 }
+
 .modal-content {
     width: auto;
 }
+
 .todos.d-flex.flex-wrap {
     gap: 50px;
 }
+
 .circle {
     width: 16px;
     height: 16px;
     border-radius: 50%;
     border: 2px solid gray;
-  }  
-  
-  .incomplete {
+}
+
+.incomplete {
     border-radius: 10px 0px 10px 10px;
     border: 2px solid gray;
-  }
+}
 
-  .inprogress {
+.inprogress {
     border: 40x solid green;
     border-radius: 10px 0px 10px 10px;
     background-image: linear-gradient(90deg, green 50%, transparent 50%);
     background-size: 100% 200%;
-  }
-  
-  .Done {
+}
+
+.Done {
     border-radius: 10px 0px 10px 10px;
     background-color: green;
     border: 2px solid gray;
-  }
-  
-    
+}
+
+/* footer  */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
 @media screen and (max-width: 550px) {
     .card-body {
-        display: block;  
-        text-align: start; 
+        display: block;
+        text-align: start;
         padding-left: 10px;
         gap: 20px;
     }
-    .status-button, .icons {
+
+    .status-button,
+    .icons {
         padding: 10px 0;
     }
 }
+
 @media screen and (max-width: 400px) {
     .headercontainer {
-        display: block;  
-        text-align: start; 
+        display: block;
+        text-align: start;
         padding-left: 15px;
     }
 }
