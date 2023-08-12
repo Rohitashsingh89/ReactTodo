@@ -4,9 +4,8 @@ import TodoList from './TodoList';
 
 const getlocalstoragetodos = () => {
   let todos = localStorage.getItem('todos');
-  // console.log(todos)
 
-  if(todos) {
+  if (todos) {
     return JSON.parse(localStorage.getItem('todos'));
   } else {
     return [];
@@ -17,6 +16,7 @@ function TodoInput() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [inputDesc, setInputDesc] = useState('');
   const [priority, setPriority] = useState('');
   const [todos, setTodos] = useState(getlocalstoragetodos());
   const [selectedTodoIndex, setSelectedTodoIndex] = useState(null);
@@ -25,19 +25,29 @@ function TodoInput() {
   const toggleModal = () => {
     if (!modalOpen) {
       setInputText('');
+      setInputDesc('');
       setPriority('');
       setSelectedTodoIndex(null);
     }
     setModalOpen(!modalOpen);
   };
-  
-  const handleInputChange = (e) => {
-    setInputText(e.currentTarget.value);
+
+  const handleInputTextChange = (e) => {
+    const newText = e.currentTarget.value;
+
+    if (newText.length <= 23) {
+      setInputText(newText);
+    } else {
+        alert("You can't write more than 25 characters in the title section.");
+    }
+  }
+
+  const handleInputDescChange = (e) => {
+    setInputDesc(e.currentTarget.value);
   }
 
   const handlePriorityChange = (e) => {
     setPriority(e)
-    // console.log(e)
   }
 
   const handleDeleteTodo = (index) => {
@@ -48,6 +58,7 @@ function TodoInput() {
   const handleUpdateTodo = (index) => {
     const selectedTodo = todos[index];
     setInputText(selectedTodo.inputText);
+    setInputDesc(selectedTodo.inputDesc);
     setPriority(selectedTodo.priority);
     setSelectedTodoIndex(index);
     setModalOpen(true);
@@ -66,34 +77,7 @@ function TodoInput() {
     }
 
     setTodos(updatedTodos);
-  };    
-
-  // useEffect(() => {
-  //   // Retrieve the stored data from localStorage
-  //   const storedPriority = localStorage.getItem('priority');
-  //   const storedTaskName = localStorage.getItem('taskName');
-
-  //   if (storedPriority && storedTaskName) {
-  //     // Set the stored values to the state variables
-  //     setPriority(storedPriority);
-  //     setInputText(storedTaskName);
-  //   }
-  // }, []); // Empty dependency array to run the effect only once when the component mounts
-
-  // useEffect(() => {
-  //   const storedTodos = JSON.parse(localStorage.getItem('todos'));
-
-  //   if (storedTodos) {
-  //     setTodos(storedTodos);
-  //   }
-  // }, []);
-
-
-  // useEffect(() => {
-  //   // Store the form data in local storage whenever priority or inputText changes
-  //   localStorage.setItem('priority', priority);
-  //   localStorage.setItem('taskName', inputText);
-  // }, [priority, inputText]);
+  };
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -102,19 +86,16 @@ function TodoInput() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Store the form data in local storage
-    // localStorage.setItem('priority', priority);
-    // localStorage.setItem('taskName', inputText);
-
     if (selectedTodoIndex !== null) {
       // Update the selected todo
       const updatedTodos = [...todos];
       const selectedTodo = updatedTodos[selectedTodoIndex];
       selectedTodo.priority = priority;
       selectedTodo.inputText = inputText;
+      selectedTodo.inputDesc = inputDesc;
       selectedTodo.status = 'Done';
       setTodos(updatedTodos);
-  
+
       // Clear the selected todo index
       setSelectedTodoIndex(null);
     } else {
@@ -122,6 +103,7 @@ function TodoInput() {
       const newTodo = {
         priority,
         inputText,
+        inputDesc,
         status: 'Incomplete'
       };
       setTodos([...todos, newTodo]);
@@ -130,36 +112,50 @@ function TodoInput() {
     // Process the form submission here
     setPriority('');
     setInputText('');
-    // console.log('Selected priority:', priority);
-    // console.log('Task Name:', inputText);
-    
-    // console.log(inputText)
+    setInputDesc('');
   }
 
 
   return (
     <>
-    <div className="wrapper">
-      <div className="headercontainer">
-          <h1 >THINGS TO DO</h1>
-          <button className='button' color="primary" onClick={toggleModal} style={{ border: 'none', outline: "none" }}>+ Add Task</button>
-      </div>
+      <div className="wrapper">
+        <div className='box d-flex flex-wrap' style={{ gap: "20px" }}>
+          <div className="todocontainer">
+            <div className="box bg-light d-flex flex-column justify-content-center align-items-center shadow" style={{ width: "300px", height: "300px" }}>
+              <li className='fa fa-plus text-primary' onClick={toggleModal} style={{ padding: "2rem", border: "2px dashed blue", borderRadius: "50%", cursor: "pointer" }}></li>
+              <span className='mt-2'>Add Stack</span>
+            </div>
+          </div>
 
+          {/* Render the todos using the TodoList component */}
+          <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onUpdateTodo={handleUpdateTodo} onUpdateStatus={handleToggleStatus} />
+
+        </div>
+
+        {/* modal for creating or updating stack  */}
         <Modal isOpen={modalOpen} toggle={toggleModal} className="centered-modal">
-        <ModalHeader toggle={toggleModal}>
-          Add Task
-          <span onClick={toggleModal} className="close-icon">&#10006;</span>
-        </ModalHeader> 
-         <ModalBody>
+          <ModalHeader toggle={toggleModal}>
+            Add Task
+            <span onClick={toggleModal} className="close-icon">&#10006;</span>
+          </ModalHeader>
+          <ModalBody>
+
             <form id='ToDoForm' onSubmit={handleSubmit} >
               <div className="form-group">
                 <label htmlFor="inputValue">Task</label>
-                <input type="text" className="form-control" id="inputValue" 
-                value={inputText}
-                onChange={handleInputChange} 
-                style={{outline: "none", borderRadius: "10px"}}
-                placeholder='Specify your task...'
-                required />
+                <input type="text" className="form-control " id="inputValue" 
+                  value={inputText}
+                  onChange={handleInputTextChange}
+                  style={{ outline: "none" }}
+                  placeholder='Specify your task...'
+                  required />
+                <label htmlFor="desc">Description</label>
+                <textarea name="desc"
+                  id="desc" className='form-control'
+                  value={inputDesc}
+                  cols="30" rows="3"
+                  onChange={handleInputDescChange}
+                ></textarea>
               </div>
               <div className="form-group">
                 <label htmlFor="priority">Priority</label>
@@ -193,16 +189,13 @@ function TodoInput() {
             </form>
           </ModalBody>
           <ModalFooter>
-              <button type="submit" form="ToDoForm" className="btn2 btn-secondary" onClick={toggleModal} style={{border: "none", outline: "none"}}>Add</button>
+            <button type="submit" form="ToDoForm" className="btn2 btn-secondary" onClick={toggleModal} style={{ border: "none", outline: "none", cursor: "pointer" }}>Add</button>
           </ModalFooter>
         </Modal>
 
-      {/* Render the todos using the TodoList component */}
-      <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onUpdateTodo={handleUpdateTodo} onUpdateStatus={handleToggleStatus} />
-      
       </div>
-      </>
-      )
+    </>
+  )
 }
 
 export default TodoInput;
